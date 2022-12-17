@@ -31,7 +31,7 @@ Train a model, sampling data points with the highest loss from a larger dataset
 """
 from itertools import islice
 
-from fitipy import Fitipy
+from precise.fitipy import Fitipy
 from prettyparse import Usage
 
 from precise.scripts.train import TrainScript

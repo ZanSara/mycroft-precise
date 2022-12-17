@@ -14,9 +14,10 @@
 """
 Loads model
 """
-import attr
+from dataclasses import dataclass
 from os.path import isfile
 from typing import *
+import tensorflow as tf
 
 from precise.functions import load_keras, false_pos, false_neg, weighted_log_loss, set_loss_bias
 from precise.params import inject_params, pr
@@ -25,7 +26,7 @@ if TYPE_CHECKING:
     from keras.models import Sequential
 
 
-@attr.s()
+@dataclass
 class ModelParams:
     """
     Attributes:
@@ -37,12 +38,12 @@ class ModelParams:
         loss_bias: Near 1.0 reduces false positives. See <set_loss_bias>
         freeze_till: Layer number from start to freeze after loading (allows for partial training)
     """
-    recurrent_units = attr.ib(20)  # type: int
-    dropout = attr.ib(0.2)  # type: float
-    extra_metrics = attr.ib(False)  # type: bool
-    skip_acc = attr.ib(False)  # type: bool
-    loss_bias = attr.ib(0.7)  # type: float
-    freeze_till = attr.ib(0)  # type: int
+    recurrent_units: int = 20
+    dropout: float = 0.2
+    extra_metrics: bool = False
+    skip_acc: bool = False
+    loss_bias: float = 0.7
+    freeze_till: int = 0
 
 
 def load_precise_model(model_name: str) -> Any:
@@ -70,11 +71,10 @@ def create_model(model_name: Optional[str], params: ModelParams) -> 'Sequential'
         model = load_precise_model(model_name)
     else:
         from keras.layers.core import Dense
-        from keras.layers.recurrent import GRU
         from keras.models import Sequential
 
         model = Sequential()
-        model.add(GRU(
+        model.add(tf.keras.layers.GRU(
             params.recurrent_units, activation='linear',
             input_shape=(
                 pr.n_features, pr.feature_size), dropout=params.dropout, name='net'

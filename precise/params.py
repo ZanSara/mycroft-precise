@@ -19,13 +19,13 @@ These configure the following stages:
 """
 from math import floor
 
-import attr
+from dataclasses import dataclass
 import json
 import hashlib
 from os.path import isfile
 
 
-@attr.s(frozen=True)
+@dataclass
 class ListenerParams:
     """
     General pipeline information:
@@ -57,18 +57,18 @@ class ListenerParams:
      - threshold_config: Output distribution configuration automatically generated from precise-calc-threshold
      - threshold_center: Output distribution center automatically generated from precise-calc-threshold
     """
-    buffer_t = attr.ib()  # type: float
-    window_t = attr.ib()  # type: float
-    hop_t = attr.ib()  # type: float
-    sample_rate = attr.ib()  # type: int
-    sample_depth = attr.ib()  # type: int
-    n_fft = attr.ib()  # type: int
-    n_filt = attr.ib()  # type: int
-    n_mfcc = attr.ib()  # type: int
-    use_delta = attr.ib()  # type: bool
-    vectorizer = attr.ib()  # type: int
-    threshold_config = attr.ib()  # type: tuple
-    threshold_center = attr.ib()  # type: float
+    buffer_t: float
+    window_t: float
+    hop_t: float
+    sample_rate: int
+    sample_depth: int
+    n_fft: int
+    n_filt: int
+    n_mfcc: int
+    use_delta: bool
+    vectorizer: int
+    threshold_config: tuple
+    threshold_center: float
 
     @property
     def buffer_samples(self):

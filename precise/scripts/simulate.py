@@ -28,11 +28,11 @@ unbiased false positive metrics
 :-t --threshold float 0.5
     Network output required to be considered an activation
 """
-import attr
+from dataclasses import dataclass
 import numpy as np
 from glob import glob
 from os.path import join, basename
-from precise_runner.runner import TriggerDetector
+from precise.scripts.runner import TriggerDetector
 from prettyparse import Usage
 
 from precise.network_runner import Listener
@@ -42,13 +42,13 @@ from precise.util import load_audio
 from precise.vectorization import vectorize_raw
 
 
-@attr.s()
+@dataclass
 class Metric:
-    chunk_size = attr.ib()  # type: int
-    seconds = attr.ib(0.0)  # type: float
-    activated_chunks = attr.ib(0)  # type: int
-    activations = attr.ib(0)  # type: int
-    activation_sum = attr.ib(0.0)  # type: float
+    chunk_size: int
+    seconds: float = 0.0
+    activated_chunks: int = 
+    activations: int = 0
+    activation_sum: float = 0.0
 
     @property
     def days(self):

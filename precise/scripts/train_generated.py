@@ -61,7 +61,7 @@ from math import sqrt
 
 import numpy as np
 from contextlib import suppress
-from fitipy import Fitipy
+from precise.fitipy import Fitipy
 from keras.callbacks import LambdaCallback
 from os.path import splitext, join, basename
 from prettyparse import Usage

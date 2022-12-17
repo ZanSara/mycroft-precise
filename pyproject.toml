@@ -38,6 +38,7 @@ dependencies = [
     'h5py',
     'wavio',
     'prettyparse',
+    'pyache' # FIXME review if it's really useful
 ]
 dynamic = ["version"]
 

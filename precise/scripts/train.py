@@ -54,7 +54,7 @@ Train a new model on a dataset
 
 ...
 """
-from fitipy import Fitipy
+from precise.fitipy import Fitipy
 from keras.callbacks import LambdaCallback
 from os.path import splitext, isfile
 from prettyparse import Usage

@@ -31,10 +31,10 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: CPython",
 ]
 dependencies = [
-    'numpy', #==1.16',
-    'tensorflow', #>=1.13,<1.14',  # Must be on piwheels
+    'numpy',
+    'scipy',
+    'tensorflow',
     'pyaudio',
-    'keras', #<=2.1.5',
     'h5py',
     'wavio',
     'prettyparse',

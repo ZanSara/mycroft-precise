@@ -38,8 +38,8 @@ Run a model on microphone audio input
 """
 import numpy as np
 from os.path import join
-from precise_runner import PreciseRunner
-from precise_runner.runner import ListenerEngine
+from precise.runner import PreciseRunner
+from precise.runner import ListenerEngine
 from prettyparse import Usage
 from random import randint
 from shutil import get_terminal_size

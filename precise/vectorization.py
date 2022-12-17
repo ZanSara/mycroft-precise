@@ -21,7 +21,7 @@ from typing import *
 
 from precise.params import pr, Vectorizer
 from precise.util import load_audio, InvalidAudio
-from sonopy import mfcc_spec, mel_spec
+from precise.sonopy import mfcc_spec, mel_spec
 
 inhibit_t = 0.4
 inhibit_dist_t = 1.0

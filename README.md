@@ -106,11 +106,7 @@ a PR to support other operating systems. The dependencies are:
  - python3-h5py
  - portaudio19-dev
 
-After this, run the setup script:
-
-```bash
-./setup.sh
-```
+`sudo apt-get install -y python3-pip curl libopenblas-dev python3-scipy cython libhdf5-dev python3-h5py portaudio19-dev swig libpulse-dev libatlas-base-dev`
 
 Finally, you can write your program and run it as follows:
 ```bash

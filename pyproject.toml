@@ -1,0 +1,74 @@
+[build-system]
+requires = ["hatchling>=1.8.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "mycroft-precise-310"
+description = "Mycroft Precise Wake Word Listener"
+readme = "README.md"
+license = "Apache-2.0"
+requires-python = ">=3.10"
+keywords = [
+  "wakeword",
+  "keyword",
+  "wake",
+  "word",
+  "listener",
+  "sound",
+]
+authors = [
+  { name = "Matthew Scholefield", email = "matthew.scholefield@mycroft.ai" },
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Topic :: Text Processing :: Linguistic",
+  "License :: OSI Approved :: Apache Software License",
+  "Natural Language :: English",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: Implementation :: CPython",
+]
+dependencies = [
+    'numpy', #==1.16',
+    'tensorflow', #>=1.13,<1.14',  # Must be on piwheels
+    'pyaudio',
+    'keras', #<=2.1.5',
+    'h5py',
+    'wavio',
+    'prettyparse',
+]
+dynamic = ["version"]
+
+[project.optional-dependencies]
+test = [
+  "pylint",
+  "black",
+  "pytest",
+]
+
+[project.urls]
+Homepage = "https://github.com/ZanSara/mycroft-precise"
+Source = "https://github.com/ZanSara/mycroft-precise"
+
+[project.scripts]
+precise-add-noise = 'precise.scripts.add_noise:main'
+precise-collect = 'precise.scripts.collect:main'
+precise-convert = 'precise.scripts.convert:main'
+precise-eval = 'precise.scripts.eval:main'
+precise-listen = 'precise.scripts.listen:main'
+precise-engine = 'precise.scripts.engine:main'
+precise-simulate = 'precise.scripts.simulate:main'
+precise-test = 'precise.scripts.test:main'
+precise-graph = 'precise.scripts.graph:main'
+precise-train = 'precise.scripts.train:main'
+precise-train-optimize = 'precise.scripts.train_optimize:main'
+precise-train-sampled = 'precise.scripts.train_sampled:main'
+precise-train-incremental = 'precise.scripts.train_incremental:main'
+precise-train-generated = 'precise.scripts.train_generated:main'
+precise-calc-threshold = 'precise.scripts.calc_threshold:main'
+
+[tool.hatch.version]
+path = "VERSION.txt"
+pattern = "(?P<version>.+)"

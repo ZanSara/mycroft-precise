@@ -56,7 +56,6 @@ Source = "https://github.com/ZanSara/mycroft-precise"
 [project.scripts]
 precise-add-noise = 'precise.scripts.add_noise:main'
 precise-collect = 'precise.scripts.collect:main'
-precise-convert = 'precise.scripts.convert:main'
 precise-eval = 'precise.scripts.eval:main'
 precise-listen = 'precise.scripts.listen:main'
 precise-engine = 'precise.scripts.engine:main'

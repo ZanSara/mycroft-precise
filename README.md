@@ -13,7 +13,7 @@ See their README for a more detailed description.
  - `>=3.10`
 
 ### Training
- - See the [wiki](https://github.com/ZanSara/mycroft-precise/wiki/Training-your-own-wake-word)
+ - See the [wiki](https://github.com/ZanSara/mycroft-precise/wiki/)
 
 ## Installation
 
@@ -35,4 +35,4 @@ precise-collect
 
 Precise uses just a single recurrent network, specifically a GRU.
 
-![Architecture Diagram](https://images2.imgbox.com/f7/44/6N4xFU7D_o.png)
+![Architecture Diagram](https://raw.githubusercontent.com/ZanSara/mycroft-precise/dev/diagram.png)

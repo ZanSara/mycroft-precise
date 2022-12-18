@@ -118,14 +118,14 @@ class TriggerDetector:
     This prevents multiple close activations from occurring when
     the predictions look like ...!!!..!!...
     """
-    def __init__(self, chunk_size, sensitivity=0.5, trigger_level=3):
+    def __init__(self, chunk_size, sensitivity=0.5, trigger_level=3, trigger_immediately=False):
         self.chunk_size = chunk_size
         self.sensitivity = sensitivity
         self.trigger_level = trigger_level
+        self.trigger_immediately = trigger_immediately
         self.activation = 0
 
-    def update(self, prob):
-        # type: (float) -> bool
+    def update(self, prob: float) -> bool:
         """Returns whether the new prediction caused an activation"""
         chunk_activated = prob > 1.0 - self.sensitivity
 
@@ -137,8 +137,9 @@ class TriggerDetector:
 
             if has_activated:
                 return True
-        elif self.activation > 0:
+        elif self.activation > 0 and not self.trigger_immediately:
             self.activation -= 1
+
         return False
 
 
@@ -165,7 +166,8 @@ class PreciseRunner(object):
     """
 
     def __init__(self, engine, trigger_level=3, sensitivity=0.5, stream=None,
-                 on_prediction=lambda x: None, on_activation=lambda: None):
+                 on_prediction=lambda x: None, on_activation=lambda: None, 
+                 trigger_immediately: bool = False):
         self.engine = engine
         self.trigger_level = trigger_level
         self.stream = stream
@@ -177,7 +179,12 @@ class PreciseRunner(object):
         self.thread = None
         self.running = False
         self.is_paused = False
-        self.detector = TriggerDetector(self.chunk_size, sensitivity, trigger_level)
+        self.detector = TriggerDetector(
+            chunk_size=self.chunk_size, 
+            sensitivity=sensitivity, 
+            trigger_level=trigger_level, 
+            trigger_immediately=trigger_immediately
+        )
         atexit.register(self.stop)
 
     def _wrap_stream_read(self, stream):
@@ -209,19 +216,19 @@ class PreciseRunner(object):
 
     def stop(self):
         """Stop listening and close stream"""
+        if self.pa:
+            self.pa.terminate()
+            self.stream.stop_stream()
+            self.stream = self.pa = None
+        
+        self.engine.stop()
+        
         if self.thread:
             self.running = False
             if isinstance(self.stream, ReadWriteStream):
                 self.stream.write(b'\0' * self.chunk_size)
             self.thread.join()
             self.thread = None
-
-        self.engine.stop()
-
-        if self.pa:
-            self.pa.terminate()
-            self.stream.stop_stream()
-            self.stream = self.pa = None
 
     def pause(self):
         self.is_paused = True

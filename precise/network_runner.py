@@ -83,7 +83,7 @@ class KerasRunner(Runner):
 
     def predict(self, inputs: np.ndarray):
         #with self.graph.as_default():
-        return self.model.predict(inputs)
+        return self.model.predict(inputs, verbose=3)
 
     def run(self, inp: np.ndarray) -> float:
         return self.predict(inp[np.newaxis])[0][0]

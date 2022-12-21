@@ -21,7 +21,18 @@ See their README for a more detailed description.
 git clone https://github.com/mycroftai/mycroft-precise
 cd mycroft-precise
 
-sudo apt-get install -y python3-pip python3-dev curl libopenblas-dev python3-scipy libhdf5-dev python3-h5py portaudio19-dev swig libpulse-dev libatlas-base-dev
+sudo apt-get install -y \
+    python3-pip \
+    python3-dev \
+    curl \
+    libopenblas-dev \
+    python3-scipy \
+    libhdf5-dev \
+    python3-h5py \
+    portaudio19-dev \
+    swig \
+    libpulse-dev \
+    libatlas-base-dev
 
 python3 -m venv venv
 source venv/bin/activate

@@ -216,20 +216,23 @@ class PreciseRunner(object):
 
     def stop(self):
         """Stop listening and close stream"""
-        if self.pa:
-            self.pa.terminate()
-            self.stream.stop_stream()
-            self.stream = self.pa = None
-        
-        self.engine.stop()
-        
         if self.thread:
             self.running = False
             if isinstance(self.stream, ReadWriteStream):
                 self.stream.write(b'\0' * self.chunk_size)
-            self.thread.join()
-            self.thread = None
+                self.stream.flush()
 
+        self.engine.stop()
+
+        if self.pa:
+            self.pa.terminate()
+            self.stream.stop_stream()
+            self.stream = self.pa = None
+
+        if self.thread:
+            #self.thread.join()
+            self.thread = None
+        
     def pause(self):
         self.is_paused = True
 
@@ -241,10 +244,8 @@ class PreciseRunner(object):
         while self.running:
             chunk = self.stream.read(self.chunk_size)
 
-            if self.is_paused:
-                continue
-
-            prob = self.engine.get_prediction(chunk)
-            self.on_prediction(prob)
-            if self.detector.update(prob):
-                self.on_activation()
+            if not self.is_paused:
+                prob = self.engine.get_prediction(chunk)
+                self.on_prediction(prob)
+                if self.detector.update(prob):
+                    self.on_activation()
